@@ -347,10 +347,11 @@ extension Binary {
      - On a 64-bit platform, UInt is the same size as UInt64.
      */
     public func get<T: Integer>(at offset: Int) throws -> T {
-        let end = offset + MemoryLayout<T>.size
+        let size = MemoryLayout<T>.size
+        let end = offset + size
         guard end <= self.count else { throw BinaryError.outOfBounds }
 
-        return try self.scanValue(start: offset, length: end)
+        return try self.scanValue(start: offset, length: size)
     }
 }
 
@@ -389,10 +390,11 @@ extension Binary {
      - Returns: The parsed decimal number.
      */
     public func get<T: FloatingPoint>(at offset: Int) throws -> T {
-        let end = offset + MemoryLayout<T>.size
+        let size = MemoryLayout<T>.size
+        let end = offset + size
         guard end <= self.count else { throw BinaryError.outOfBounds }
 
-        return try self.scanValue(start: offset, length: end)
+        return try self.scanValue(start: offset, length: size)
     }
 
     /**
